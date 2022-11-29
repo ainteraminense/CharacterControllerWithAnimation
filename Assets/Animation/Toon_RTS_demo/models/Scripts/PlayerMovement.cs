@@ -78,7 +78,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            Attack();
+            StartCoroutine(Attack());
         }
     }
     private void Idle()
@@ -101,8 +101,12 @@ public class PlayerMovement : MonoBehaviour
     {
         velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
     }
-    private void Attack()
+    private IEnumerator Attack()
     {
+        anim.SetLayerWeight(anim.GetLayerIndex("Attack Layer"), 1);
         anim.SetTrigger("Attack");
+
+        yield return new WaitForSeconds(0.9f);
+        anim.SetLayerWeight(anim.GetLayerIndex("Attack Layer"), 0);
     }
 }
